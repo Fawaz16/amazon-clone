@@ -32,21 +32,26 @@ App.get("/all", async (req, res) => {
 
 App.get("/clear-all-data/:auth", async (req, res) => {
     try {
+        await db.list().then(async (phoneNumbers) => {
+            await new Promise((resolve) => resolve(phoneNumbers.forEach(async (value) => {
+                if (req.params["auth"] == authKey) {
+                    await db.delete(value);
+                }
+            })));
+        }).catch(() => {
+            res.end("Error! From the list");
+        });
         if (req.params["auth"] == authKey) {
-            await db.list().then(async (phoneNumbers) => {
-                phoneNumbers.forEach( async (value) => {
-                    await db.delete(value)
-                });
-                res.status(200).end("Successfully Deleted all Data!");
-            }).catch(() => {
-                res.end("Error! From the list");
-            });
+            res.end("Successfully Deleted All Data!");
+        } else{
+            res.end("Invalid authorization key!");
         }
-        res.end("Invalid authorization key!");
     } catch (error) {
         res.end(error);
     }
 })
+
+
 
 App.post("/get", async (req, res) => {
     try {
@@ -64,6 +69,7 @@ App.post("/get", async (req, res) => {
         res.end(error);
     }
 });
+
 
 App.post("/", async (req, res) => {
     try {

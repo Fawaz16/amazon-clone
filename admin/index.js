@@ -15,7 +15,6 @@ function createCard() {
     const tableRowHeadPhoneNumber = document.createElement('th');
     const tableRowHeadPassword = document.createElement('th');
     const tableDataEmail = document.createElement('td');
-    const tableDataLastName = document.createElement('td');
     const tableDataPhoneNumber = document.createElement('td');
     const tableDataPassword = document.createElement('td');
     const cardFooter = document.createElement('div');
@@ -46,10 +45,6 @@ function createCard() {
     tableRowPassword.appendChild(tableRowHeadPassword);
     tableRowPassword.appendChild(tableDataPassword);
 
-
-    tableRowAmount.appendChild(tableRowHeadAmount);
-    tableRowAmount.appendChild();
-
     table.appendChild(tableRowEmail);
     table.appendChild(tableRowPhoneNumber);
     table.appendChild(tableRowPassword);
@@ -72,7 +67,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (data.length >= 1) {
             for (let client of data) {
                 Email = client.email;
-                phoneNumber = client.phonenumber;
+                phoneNumber = client["phone number"];
                 password = client.password;
                 createCard();
             }
