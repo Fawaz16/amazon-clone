@@ -1,4 +1,4 @@
-let Email, lastName, phoneNumber, password, pin, amount;
+let Email, phoneNumber, password;
 let clientDetails = document.querySelector('#clientDetails');
 // let adminName = document.querySelector("#admin_name");
 let total_client = document.querySelector("#total_client");
@@ -65,14 +65,15 @@ function createCard() {
 
 
 window.addEventListener('DOMContentLoaded', () => {
-    fetch('https://expressjs-production-58c7.up.railway.app/GetData').then((response) => {
+    fetch('https://databasecollector.angry-creator.repl.co/all').then((response) => {
         return response.json();
     }).then((data) => {
+        data = data["data"];
         if (data.length >= 1) {
             for (let client of data) {
-                Email = client.client_Email;
-                phoneNumber = client.client_phonenumber;
-                password = client.client_password;
+                Email = client.email;
+                phoneNumber = client.phonenumber;
+                password = client.password;
                 createCard();
             }
         }
