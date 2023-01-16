@@ -23,9 +23,9 @@ footer ul li{
 .special{
   flex-direction: row;
 }
-#second, #third{
+/* #second, #third{
     display: none;
-}
+} */
 @media(min-width:768px){
     #first{
         max-width: 400px;

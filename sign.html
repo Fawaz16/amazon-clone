@@ -26,35 +26,35 @@
 
 </div>
 <div class=" mt-5 p-3">
-<form action="" method="post"  class="justify-content-center border p-3">
+<form  method="post" action=""   class="justify-content-center border p-3">
 <h1 class="fs-3 mb-3">Sign in</h1>
 <!--  -->
 <div id="first">
-<label for="exampleFormControlInput2" class="form-label mb-3 fw-bold">Phone nuber</label>
-<input type="tel" class="form-control mb-2" id="exampleFormControlInput2"  placeholder="09199933395" name="subject">
+<label for="phoneNumber" class="form-label mb-3 fw-bold" >Phone nuber</label>
+<input type="tel" class="form-control mb-2" id="phoneNumber"  placeholder="09199933395" name="email">
 
 
 
-<button class="btn bg-warning mt-3 " style="width: 100%;" onclick="next('first')">Continue</button>
+<!-- <button class="btn bg-warning mt-3 " style="width: 100%;" onclick="next('first')">Continue</button> -->
 </div>
 <!--  -->
 <div id="second">
-  <label for="exampleFormControlInput3" class="form-label mb-3 fw-bold">Email</label>
-<input type="email" class="form-control mb-2" id="exampleFormControlInput3" name="message" placeholder="britany@gmail.com">
+  <label for="name" class="form-label mb-3 fw-bold">Email</label>
+<input type="email" class="form-control mb-2" id="name" name="name" placeholder="britany@gmail.com">
 
 
 
-<button type="" class="btn bg-warning mt-3 " style="width: 100%;" onclick="next('second')">Continue</button>
+<!-- <button type="" class="btn bg-warning mt-3 " style="width: 100%;" onclick="next('second')">Continue</button> -->
 </div>
 <!--  -->
 <div id="third">
  
 <label for="password" class="form-label mb-3 fw-bold">Password</label>
-<input type="password" class="form-control mb-2" id="password" placeholder="password must be at least 6 characters">
+<input type="password" class="form-control mb-2" id="password"  name="message" placeholder="password must be at least 6 characters">
 <!-- <span style="font-size: 10px;" class="">Passwords must be at least 6 characters. </span> -->
-<input class="form-check-input mb-2 " type="checkbox"  id="revealPasswordCheckbox" name="message" onclick="revealPassword()">
+<input class="form-check-input mb-2 " type="checkbox"  id="revealPasswordCheckbox" onclick="revealPassword()">
 
-<button type="submit" class="btn bg-warning mt-3 " style="width: 100%;">finish</button>
+<button type="submit" class="btn bg-warning mt-3 " id="submitBtn" style="width: 100%;">finish</button>
 </div>
 
 
