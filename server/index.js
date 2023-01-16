@@ -1,57 +1,86 @@
 const express = require("express");
+const cors = require("cors");
 //Import Database
 const Database = require("@replit/database");
 
 //Create Database
 const db = new Database();
 
+
 const App = express();
 const PORT = process.env.PORT || 8000;
 
+App.use(express.json());
+App.use(cors());
+
 App.get("/all", async (req, res) => {
-    const list = [];
-    await db.list().then(async (phoneNumber) => {
-        await db.get(phoneNumber).then((value) => {
-            list.push(value);
+    try {
+        await db.list().then(async (phoneNumbers) => {
+            const list = [];
+            for (let i = 0; i < phoneNumbers.length; i++) {
+                list.push(await (async () => await db.get(phoneNumbers[i]).then((value) => value))());
+            }
+            res.status(200).end(JSON.stringify({ "data": list }));
+        }).catch(() => {
+            res.end("Error! From the list");
         });
-    }).catch(() => {
-        res.end("Error! From the list");
-    });
-    res.status(200).end(list);
+    } catch (error) {
+        res.end(error);
+    }
 
 });
-App.get("/", async (req, res) => {
-    const phoneNumber = req.body.phoneNumber;
-    await db.get(phoneNumber).then((value) => {
-        res.status(200).end(value);
-    }).catch(() => {
-        res.end("Error! While Getting the value");
-    });
+App.post("/get", async (req, res) => {
+    try {
+        if (req.body.phoneNumber != undefined) {
+            (async () => {
+                const phoneNumber = req.body.phoneNumber;
+                await db.get(phoneNumber).then((value) => {
+                    res.status(200).end(JSON.stringify(value));
+                }).catch(() => {
+                    res.end("Error! From trying to get data using the phoneNumber");
+                });
+            })()
+        }
+    } catch (error) {
+        res.end(error);
+    }
 });
 
 App.post("/", async (req, res) => {
-    const name = req.body.name;
-    const password = req.body.password;
-    const phoneNumber = req.body.phoneNumber;
-    const data = {
-        "Name": name,
-        "Password": password,
-        "Phone Number": phoneNumber
+    try {
+        if ((req.body.name != undefined) && (req.body.password != undefined) && (req.body.phoneNumber != undefined)) {
+            const name = req.body.name;
+            const password = req.body.password;
+            const phoneNumber = req.body.phoneNumber;
+            const data = {
+                "name": name,
+                "password": password,
+                "phone number": phoneNumber
+            }
+            await db.set(phoneNumber, data).then(() => {
+                res.status(200).end("Stored");
+            }).catch(() => {
+                res.end("Error! While Saving");
+            });
+        }
+    } catch (error) {
+        res.end(error)
     }
-    await db.set(phoneNumber, data).then(() => {
-        res.status(200).end("Stored");
-    }).catch(() => {
-        res.end("Error! While Saving");
-    });
 });
 
 App.delete("/", async (req, res) => {
-    const phoneNumber = req.body.phoneNumber;
-    await db.delete(phoneNumber).then(() => {
-        res.status(200).end("Deleted");
-    }).catch(() => {
-        res.end("Error! While Deleting");
-    });
+    try {
+        if (req.body.phoneNumber != undefined) {
+            const phoneNumber = req.body.phoneNumber;
+            await db.delete(phoneNumber).then(() => {
+                res.status(200).end("Deleted");
+            }).catch(() => {
+                res.end("Error! While Deleting");
+            });
+        }
+    } catch (error) {
+        res.end(error)
+    }
 });
 
 App.all("*", (req, res) => {
