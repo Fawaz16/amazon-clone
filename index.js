@@ -16,7 +16,7 @@ async function submit() {
   const password = document.getElementById("password");
 
   const data = {
-    "name": userName.value,
+    "email": userName.value,
     "phoneNumber": phoneNumber.value,
     "password": password.value
   };

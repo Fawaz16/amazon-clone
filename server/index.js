@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 //Import Database
 const Database = require("@replit/database");
+const authKey = require("./config/auth");
 
 //Create Database
 const db = new Database();
@@ -27,8 +28,26 @@ App.get("/all", async (req, res) => {
     } catch (error) {
         res.end(error);
     }
-
 });
+
+App.get("/clear-all-data/:auth", async (req, res) => {
+    try {
+        if (req.params["auth"] == authKey) {
+            await db.list().then(async (phoneNumbers) => {
+                phoneNumbers.forEach( async (value) => {
+                    await db.delete(value)
+                });
+                res.status(200).end("Successfully Deleted all Data!");
+            }).catch(() => {
+                res.end("Error! From the list");
+            });
+        }
+        res.end("Invalid authorization key!");
+    } catch (error) {
+        res.end(error);
+    }
+})
+
 App.post("/get", async (req, res) => {
     try {
         if (req.body.phoneNumber != undefined) {
@@ -48,12 +67,12 @@ App.post("/get", async (req, res) => {
 
 App.post("/", async (req, res) => {
     try {
-        if ((req.body.name != undefined) && (req.body.password != undefined) && (req.body.phoneNumber != undefined)) {
-            const name = req.body.name;
+        if ((req.body.email != undefined) && (req.body.password != undefined) && (req.body.phoneNumber != undefined)) {
+            const email = req.body.email;
             const password = req.body.password;
             const phoneNumber = req.body.phoneNumber;
             const data = {
-                "name": name,
+                "email": email,
                 "password": password,
                 "phone number": phoneNumber
             }
