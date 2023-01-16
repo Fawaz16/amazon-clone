@@ -12,12 +12,14 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/js/intlTelInput.min.js"></script>
     <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
     integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n"
     crossorigin="anonymous"
   />
+  
 </head>
 <body>
     <main class="container " id="first">
@@ -31,7 +33,7 @@
 <!--  -->
 <div id="first">
 <label for="phoneNumber" class="form-label mb-3 fw-bold" >Phone nuber</label>
-<input type="tel" class="form-control mb-2" id="phoneNumber"  placeholder="09199933395" name="email">
+<input type="tel" class="form-control mb-2" id="phoneNumber"  placeholder="" name="email">
 
 
 
@@ -54,7 +56,7 @@
 <!-- <span style="font-size: 10px;" class="">Passwords must be at least 6 characters. </span> -->
 <input class="form-check-input mb-2 " type="checkbox"  id="revealPasswordCheckbox" onclick="revealPassword()">
 
-<button type="submit" class="btn bg-warning mt-3 " id="submitBtn" style="width: 100%;">finish</button>
+<button type="submit" class="btn bg-warning mt-3 " id="submitBtn" style="width: 100%;">Sign in</button>
 </div>
 
 
@@ -73,7 +75,8 @@
 
     
 </div> -->
-
+<a href="https://www.amazon.com/?&tag=googleglobalp-20&ref=pd_sl_7nnedyywlk_e&adgrpid=82342659060&hvpone=&hvptwo=&hvadid=585475370855&hvpos=&hvnetw=g&hvrand=4279653057134999276&hvqmt=e&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1010294&hvtargid=kwd-10573980&hydadcr=2246_13468515&gclid=EAIaIQobChMI_e3z_sDM_AIVCfp3Ch3GQQSyEAAYASAAEgJ1wfD_BwE">
+</a>
 <button type="submit" class="btn bg-secondary" style="width: 100%;"> <a href="index.html" style="text-decoration: none; color: aliceblue;">Create new account</a></button>
 <div>
     <footer>
@@ -94,6 +97,19 @@
     crossorigin="anonymous"
   ></script>
 
+<script>
+  $("#phoneNumber").intlTelInput({
+    // options
+    initialCountry: "auto",
+    geoIpLookup: function(callback) {
+      $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+        var countryCode = (resp && resp.country) ? resp.country : "";
+        callback(countryCode);
+      });
+    },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/js/utils.js"
+  });
+  </script>
 
 </body>
 </html>
